@@ -13,9 +13,20 @@ def create_app() -> Flask:
     @app.post("/api/ask")
     def ask():
         """Accept a question and return a source-backed RAG response."""
-        # TODO: Step 11 - validate the request, call answer_question(), and return JSON.
-        return jsonify({"message": "Complete /api/ask in Step 11."}), 501
+        payload = request.get_json(silent=True) or {}
+        question = payload.get("question")
 
+        if not isinstance(question, str) or not question.strip():
+            return jsonify({"error": "Question is required."}), 400
+
+        try:
+            response = answer_question(question.strip())
+        except ModelServiceError as exc:
+            return jsonify({"error": str(exc)}), 503
+
+        return jsonify(response), 200
+
+    
     return app
 
 

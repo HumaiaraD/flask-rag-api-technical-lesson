@@ -4,11 +4,11 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-flask = "==3.1.3"
-chromadb = "==1.5.9"
-ollama = "==0.6.2"
+flask = "*"
+chromadb = "*"
+ollama = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.10"
+python_version = "3.14"
